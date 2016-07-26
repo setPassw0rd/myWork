@@ -1,0 +1,46 @@
+body{
+	margin: 0;
+}
+input{
+	border: none;
+	padding: 0;
+}
+.box{
+	width: 354px;
+	margin: 30px auto 0;
+}
+.dateBox{
+	height: 300px;
+	border: 2px solid black;
+}
+.week{
+	overflow: hidden;
+	border-bottom: 1px solid black;
+	line-height: 49px;
+}
+.week-in{
+	height: 49px;
+	float: left;
+	width: 50px;
+	text-align: center;
+}
+.dayBox{
+	overflow: hidden;
+}
+.day{
+	float: left;
+	height: 50px;
+	width: 50px;
+	font: 20px/50px '微软雅黑';
+	text-align: center;
+}
+.control{
+	overflow: hidden;
+}
+.con-in{
+	height: 50px;
+	float: left;
+	width: 100px;
+	text-align: center;
+	font: 20px/50px '微软雅黑';
+}
