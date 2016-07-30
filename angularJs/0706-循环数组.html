@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="../quoteFile/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <p>255的16进制：</p>
+    <h1>{{hex}}</h1>
+    <h2>{{myHeader}}</h2>
+    <h3>{{theTime}}</h3>
+    <p>{{188 | myFormat}}</p>
+
+</body>
+</html>
+<script type="text/javascript">
+var app = angular.module('myApp', []);
+    app.service('hexafy', function () {
+        this.change = function (x) {
+            return x.toString(16);
+        }
+    });
+    app.controller('myCtrl', function($scope, hexafy, $interval, $timeout) {
+        $scope.hex = hexafy.change(255);
+        $scope.myHeader = "hellow world!";
+        $timeout (function() {
+            $scope.myHeader = "how are you?";
+        }, 3000);
+        $scope.theTime = new Date().toLocaleTimeString();
+        $interval(function () {
+            $scope.theTime = new Date().toLocaleTimeString();
+        }, 1000);
+    });
+    app.filter('myFormat', ['hexafy', function(hexafy) {
+        return function (x) {
+            return hexafy.change(x);
+        }
+    }]);
+</script>
