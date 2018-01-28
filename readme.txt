@@ -1,1 +1,1 @@
-work hard £¡
+work hard
