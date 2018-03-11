@@ -29,4 +29,3 @@ var IntThousands = function (value) {
 		result = result + ',' + temp + sult;
 	}
 };
-IntThousands('1232424353');
