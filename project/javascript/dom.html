@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>dom操作</title>
+</head>
+<body>
+	<form id="theForm">
+		<p>
+			<textarea id="textarea" rows="5" cols="30">
+			</textarea>
+		</p>
+		<p>
+			<label><input type="radio" name="nodeAction">Add Node</label>
+			<label><input type="radio" name="nodeAction">Delete Node</label>
+			<label><input type="radio" name="nodeAction">Insert Node</label>
+		</p>
+		Paragraph: # <select id="grafCount"></select>
+		<input type="submit" value="Submit">
+	</form>
+	<div id="modify"></div>
+	<script type="text/javascript">
+		window.addEventListener('load', initAll, false);
+		var nodeChangeArea;
+		function initAll() {
+			document.getElementById('theForm').addEventListener('submit', nodeChange, false);
+			nodeChangeArea = document.getElementById('modify');
+		}
+
+		function addNode() {
+			var inText = document.getElementById('textarea').value;
+			// 创建一个文本节点
+			var newText = document.createTextNode(inText);
+
+			// 创建一个元素节点
+			var newGraf = document.createElement('p');
+			newGraf.appendChild(newText);
+
+			nodeChangeArea.appendChild(newGraf);
+		}
+
+		function delNode() {
+			// 获取select下拉框的值
+			var grafChoice = document.getElementById('grafCount').selectedIndex;
+			var allGrafs = nodeChangeArea.getElementsByTagName('p');
+			// item()返回HTMLCollection对象指定索引位置的节点
+			var oldGraf = allGrafs.item(grafChoice);
+
+			nodeChangeArea.removeChild(oldGraf);
+		}
+
+		function insertNode() {
+			var grafChoice = document.getElementById('grafCount').selectedIndex;
+			var inText = document.getElementById('textarea').value;
+
+			var newText = document.createTextNode(inText);
+			var newGraf = document.createElement('p');
+			newGraf.appendChild(newText);
+
+			var allGrafs = nodeChangeArea.getElementsByTagName('p');
+			var oldGraf = allGrafs.item(grafChoice);
+
+			// insertBefore() 插入节点  replaceChild() 替换节点
+			nodeChangeArea.insertBefore(newGraf, oldGraf);
+		}
+ 
+		function nodeChange(evt) {
+			var actionType = -1;
+			var pGraf = nodeChangeArea.getElementsByTagName('p').length;
+			var radioButtonSet = document.getElementById('theForm').nodeAction;
+
+			for (var i = 0; i < radioButtonSet.length; i++) {
+				if (radioButtonSet[i].checked) {
+					actionType = i;
+				}
+			}
+
+			switch(actionType) {
+				case 0:
+					addNode();
+					break;
+				case 1:
+					if (pGraf > 0) {
+						delNode();
+						break;
+					}
+				case 2: 
+					if (pGraf > 0) {
+						insertNode();
+						break;
+					}
+				default:
+					alert('no valid action was chosen');
+			}
+
+			document.getElementById('grafCount').options.length = 0;
+
+			for (var i = 0; i < nodeChangeArea.getElementsByTagName('p').length; i++) {
+				// new Option() 创建一个option标签
+				document.getElementById('grafCount').options[i] = new Option(i + 1);
+			}
+
+			evt.preventDefault();
+		}
+	</script>
+</body>
+</html>

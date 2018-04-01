@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../../package/node_modules/jquery-ui/jquery-ui.css">
+	<style type="text/css">
+		#div1 a {
+			display: block;
+			float: left;
+			padding: 10px;
+			margin: 10px;
+			font-weight: bold;
+			color: white;
+			background: gray;
+		}
+
+		#div1 a:hover {
+			color: black;
+			background: silver;
+		}
+		.position {
+			width: 500px;
+			height: 300px;
+			background: #999;
+			top: 200px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<h1 id="welcome"></h1>
+		<p>
+			<a href="#" id="red">Red</a>
+			<a href="#" id="yellow">yellow</a>
+			<a href="#" id="green">green</a>
+		</p>
+	</div>
+	<br>
+	<div>
+		<a href="#" id="textToggle">show/hidden</a><br>
+		<div id="bodyText">
+			aaaaaaaaaaaaaaaaaaaaaaaaa
+		</div>
+	</div>
+	<div class="position">
+		<h1>折叠面板</h1>
+		<ul id="theMenu">
+			<li>
+				<a href="#" class="menuLink">comedies</a>
+				<ul>
+					<li><a href="#">aaaa</a></li>
+					<li><a href="#">bbbb</a></li>
+					<li><a href="#">cccc</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="menuLink">what</a>
+				<ul>
+					<li><a href="#">eeee</a></li>
+					<li><a href="#">ffff</a></li>
+					<li><a href="#">ddddd</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" class="menuLink">where</a>
+				<ul>
+					<li><a href="#">dfsdsfd</a></li>
+					<li><a href="#">ffsdfsff</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="../../quoteFile/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="../../../package/node_modules/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#welcome').append('welcome to jquery');
+
+			$('p > a').click(function(event) {
+				$('#welcome').css({
+					'color': $(this).attr('id')
+				});
+			});
+
+			$('#bodyText').hide();
+
+			$('#textToggle').click(function() {
+				$('#bodyText').toggle('highlight', {}, 2000);
+				return false;
+			});
+
+			$('#theMenu').accordion({
+				animate: false,
+				collapsible: true,
+				header: '.menuLink',
+				heightStyle: 'content'
+			});
+		});
+	</script>
+</body>
+</html>

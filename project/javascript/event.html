@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="aDiv">
+		<h1>Welcome</h1>
+	</div>
+	<input type="text" name="text" id='input1'>
+<script type="text/javascript">
+	/*
+	* 处理窗口的事件
+	*/
+
+	// onload事件 -- 用户进入页面，而且所有元素都加载完成时，触发该事件
+	// 如何在首次加载时执行多个操作
+	addOnload(initOne);
+	addOnload(initTwo);
+	function addOnload(newFunction) {
+		var oldOnload = window.onload;
+		if (typeof oldOnload === 'function') {
+			window.onload = function () {
+				oldOnload();
+				newFunction();
+			}
+		} else {
+			window.onload = newFunction();
+		}
+	}
+
+	function initOne() {
+		document.getElementById('aDiv').style.backgroundColor = '#00f';
+	}
+
+	function initTwo() {
+		document.getElementById('aDiv').style.color = '#f00';
+	}
+
+	// onunload事件 -- 用户离开网页之后，触发该事件
+	window.onunload = function () {}
+
+	// onbeforeunload事件 -- 用户离开页面之前，触发该事件
+	// 一般用来警告用户，离开网页会丢失信息
+	window.onbeforeunload = function () {
+		return '';
+	}
+
+	// onresize事件 -- 窗口调整大小时，触发该事件
+	window.onresize = function () {
+		alert('resize');
+	}
+
+	// onmove事件 -- 窗口移动时，触发该事件
+	window.onmove = function () {
+		alert('move');
+	}
+
+	// onabort事件 -- 当用户取消网页上的图像加载时，触发该事件
+
+	// onerror事件 -- 当页面出现JavaScript错误时，可能会触发该事件
+	// 复杂页面一般设置为null，某些错误信息将不对用户展示
+
+	// onfocus和onblur事件 -- 当一个窗口成为最前面的活动窗口，触发onfocus事件，退回后台时，触发onblur事件。
+	// 大多数现代浏览器已不支持这两个事件
+
+	// onscroll事件 -- 页面滚动触发该事件
+
+	// onDOMContentLoaded事件 -- 页面自身加载时触发，而不是完成加载时触发
+	
+
+	/*
+	* 处理鼠标事件
+	*/
+	// onmousedown事件 -- 鼠标点击是触发
+	if (typeof document.oncontextmenu == 'object') {
+		if (document.all) {
+			// ie浏览器为undefined
+			document.onmousedown = caputureMousedown;
+		} else {
+			document.oncontextmenu = caputureMousedown;
+		}
+	} else {
+		window.oncontextmenu = caputureMousedown;
+	}
+
+	function caputureMousedown(evt) {
+		if (evt) {
+			// 判断用户点击的是哪个按钮
+			var mouseClick = evt.which;
+		} else {
+			// ie浏览器
+			var mouseClick = window.event.button;
+		}
+		if (mouseClick == 1 || mouseClick == 3) {
+			alert('disable');
+			return false;
+		}
+	}
+
+	// onmouseup事件 -- 单击鼠标然后释放按钮时触发
+
+	// onmousemove事件 -- 鼠标移动时触发
+
+	// onmouseover事件 -- 鼠标移入触发
+
+	// onmouseout事件 -- 鼠标移出时触发
+
+	// ondbclick事件 -- 鼠标双击时触发
+
+	// onclick事件 -- 鼠标单击时触发
+
+	/*
+	* 表单处理事件
+	*/
+
+	// onsubmit事件 -- 提交表单时触发
+
+	// onreset事件 -- 重置时触发
+
+	// onchange事件 -- 用户修改表单内容时触发，用来即时验证消息
+
+	// onselect事件 -- 用户选择了一个input或textarea表单中的文本时触发
+	document.getElementById('input1').onselect = function () {
+		alert('select');
+	}
+
+	// onclick事件 -- 用户单击复选框或按钮时触发
+
+	// onblur事件 -- 表单失去焦点时触发
+	document.getElementById('input1').onblur = function () {
+		if (this.value == '') {
+			this.value = 'qq';
+			this.focus();
+		}
+	}
+
+	// onfocus事件 -- 表单获取焦点时触发
+	document.getElementById('input1').onfocus = function () {
+		// 防止用户任意修改数据
+		this.blur();
+	}
+
+	/*
+	* 键事件处理
+	*/
+	// onkeydown事件 -- 键盘按下时触发
+
+	// onkeyup事件 -- 用户按下键盘释放时触发
+
+	// onkeypress事件 -- 用户按下键盘并释放时触发
+
+	/*
+	* 高级事件处理
+	* DOM Level 2 事件处理程序
+	*/
+	// addEventListenner方法 -- 添加目标事件监听器
+	// 三个参数：事件本身，触发事件时调用的函数（监听器），以及用来指定事件被捕获（true）还是冒泡（false）
+
+	// removeEventListener方法 -- 从目标事件移出监听器
+
+	// dispatchEvent方法 -- 允许从代码的其他位置触发事件处理程序
+	// 一个参数：event对象
+	var evt = document.createEvent('Event');
+	evt.initEvent('click', true, false);
+
+	// initEvent方法 -- 初始化已创建的事件
+	// 三个参数：事件类型，表示事件是否冒泡，以及事件能否被取消
+
+	// stopPropagation方法 -- 阻止触发事件流中的其他事件
+
+	// preventDefault方法 -- 取消正在进行的事件
+</script>
+</body>
+</html>

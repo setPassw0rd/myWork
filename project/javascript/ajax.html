@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax</title>
+</head>
+<body>
+	<p>
+		<a id="makeTextRequest" href="gAddress.txt">Request a text</a>
+		<a id="makeXMLRequest" href="us-states.xml">Request a XML</a>
+	</p>
+	<div id="updateArea"></div>
+	<script type="text/javascript">
+		window.addEventListener('load', initAll, false);
+		var xhr = false;
+
+		function initAll() {
+			document.getElementById('makeTextRequest').addEventListener('click', getNewFile, false);
+			document.getElementById('makeXMLRequest').addEventListener('click', getNewFile, false);
+		}
+
+		function getNewFile(evt) {
+			makeRequest(this.href);
+			evt.preventDefault();
+		}
+
+		function makeRequest(url) {
+			if (window.XMLHttpRequest) {
+				xhr = new XMLHttpRequest();
+			} else {
+				if (window.ActiveXObject) {
+					try {
+						xhr = new ActiveXObject('Microsoft.XMLHTTP');
+					} catch (e) {
+
+					}
+				}
+			}
+
+			if (xhr) {
+				
+				// xhr.onreadystatechange = showContents();
+				xhr.addEventListener('readystatechange', showContents, false);
+				// open传递三个参数：http请求的方法、服务器上文件url以及是否异步的布尔值
+				xhr.open('GET', url, true);
+				// send发送请求，如果是post，则需要填写传递的参数
+				xhr.send(null);
+
+			} else {
+				document.getElementById('updateArea').innerHTML = 'sorry, but I could not create an XMLHttpRequest';
+			}
+		}
+
+		function showContents() {
+			if (xhr.readyState == 4) {
+				var outMsg;
+				// 由于访问本地文件，没有经过服务器，所以status一直是0
+				if (xhr.status == 200) {
+					if (xhr.responseXML && xhr.responseXML.childNodes.length > 0) {
+						outMsg = getText(xhr.responseXML.getElementsByTagName('choices')[0]);
+					} else {
+						outMsg = xhr.responseText;
+					}
+				} else {
+					outMsg = 'There is a problem with the request ' + xhr.status;
+				}
+				document.getElementById('updateArea').innerHTML = outMsg;
+			} else {
+				// showContents();
+			}
+		}
+
+		function getText(inVal) {
+			if (inVal.textContent) {
+				return inVal.textContent;
+			}
+			return inVal.text;
+		}
+	</script>
+</body>
+</html>
