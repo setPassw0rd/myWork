@@ -1,1 +1,0 @@
-A record about out life !
